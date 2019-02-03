@@ -1,0 +1,4 @@
+{
+  "urlGet": "localhost:3001/observations/",
+  "urlPost" : "localhost:3001/observations/new"
+}

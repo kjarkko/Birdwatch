@@ -1,0 +1,33 @@
+hooks
+npm install -s react@16.8.0-alpha.0 react-dom@16.8.0-alpha.0
+npm install
+Bootstrap
+JSON server
+axios
+
+Top bar {all, new}
+
+User
+	Main view
+		all observations
+		form view
+	Form view
+	DB - react local storage
+Server
+	get observations
+	post observation
+	DB
+
+USER:
+    See existing observations (dynamic + sorting criteria)
+    Create new observation (+ discard)
+    Edit observation
+    Post observation
+    
+Observation {
+    id
+    Name of species
+    rarity {common, rare, extremely rare}
+    Notes
+    Date
+}

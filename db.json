@@ -1,0 +1,14 @@
+[
+  {
+    "id": 0,
+    "name": "dodo",
+    "date": 0,
+    "notes": "dead"
+  },
+  {
+    "id": 1,
+    "name": "T-Rex",
+    "date": 0,
+    "notes": "also dead"
+  }
+]
