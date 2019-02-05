@@ -1,27 +1,51 @@
-import React, {useState} from 'react'
-import Birds from './bird'
-import {loadLocal, getServer} from './database'
+import React, {useState,useEffect} from 'react'
+import Observations from './observation'
+import {ServerWorker, save, getObservations} from './database'
 import Form from './form'
 import TopBar from './topBar'
+import {equal} from './util'
+
 
 const App = () => {
-  const [birds, setBirds] = useState(loadLocal().concat(getServer()))
+  const [observations, setObservations] = useState([])
+  const [view, setView] = useState(<p>welcome!</p>)
+
+  const saveObservation = (obs) => {
+    setObservations(observations.concat(obs))
+    save(obs)
+  }
+  useEffect(() => {
+    const [local, promise] = getObservations()
+    promise.then(response => {
+      response.data.forEach(o => {
+        if(!local.some(l => equal(o,l)))
+          local.concat(o)
+      })
+      setObservations(local)
+    })
+    ServerWorker(observations, setObservations)
+  },[])
+  
   const views = {
     main: {
       name: 'Main',
-      html: <Birds birds={birds} />
+      create: () => {
+        return <Observations obs={observations} />
+      }
     },
     form: {
       name: 'Form',
-      html: <Form birds={birds} setBirds={setBirds} />
+      create: () => {
+        return <Form save={saveObservation} />
+      }
     }
   }
-  const [view, setView] = useState(views.main)
-
   return (
     <div>
       <TopBar views={views} currentView={view} setView={setView} />
-      {view.html}
+      <div>
+        {view}
+      </div>
     </div>
   )
 }

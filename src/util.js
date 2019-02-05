@@ -1,6 +1,23 @@
 export const timestamp = () => {
-	return Date.now().toLocaleString()
+	return new Date().toLocaleString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
 }
+
+export const removeUnion = (source, other) => 
+  source.filter(so => !other.some(lo => equal(so,lo)))
+
+export const equal = (a, b) => (
+  a.species === b.species && a.rarity === b.rarity && 
+  a.date === b.date && a.location === b.location && a.notes === b.notes
+)
+
+export const rarityOpts = [
+  'Common', 'Rare', 'Extremely rare'
+]
 
 export const geolocation = () => {
   let location = 'N/A'

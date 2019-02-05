@@ -1,14 +1,60 @@
-[
-  {
-    "id": 0,
-    "name": "dodo",
-    "date": 0,
-    "notes": "dead"
-  },
-  {
-    "id": 1,
-    "name": "T-Rex",
-    "date": 0,
-    "notes": "also dead"
-  }
-]
+{
+  "observations": [
+    {
+      "id": 0,
+      "species": "dodo",
+      "rarity": "Extremely rare",
+      "date": "1.1.-66 000 000",
+      "location": "Underground",
+      "notes": "dead"
+    },
+    {
+      "id": 1,
+      "species": "T-Rex",
+      "rarity": "Extremely rare",
+      "date": "some years ago",
+      "location": "Museum",
+      "notes": "also dead"
+    },
+    {
+      "date": "Monday, February 4, 2019",
+      "location": "N/A",
+      "species": "aku ankka",
+      "rarity": "Common",
+      "notes": "kvak",
+      "id": 2
+    },
+    {
+      "date": "Monday, February 4, 2019",
+      "location": "N/A",
+      "species": "afsawewear",
+      "rarity": "Common",
+      "notes": "lwekajfiowagjoi",
+      "id": 3
+    },
+    {
+      "date": "Monday, February 4, 2019",
+      "location": "N/A",
+      "species": "xxx",
+      "rarity": "Rare",
+      "notes": "fae",
+      "id": 4
+    },
+    {
+      "date": "Tuesday, February 5, 2019",
+      "location": "N/A",
+      "species": "test",
+      "rarity": "Common",
+      "notes": "test test",
+      "id": 5
+    },
+    {
+      "date": "Tuesday, February 5, 2019",
+      "location": "N/A",
+      "species": "prii",
+      "rarity": "Rarity",
+      "notes": "pröö",
+      "id": 6
+    }
+  ]
+}

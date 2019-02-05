@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 const TopBar = ({views, currentView, setView}) => {
 
@@ -6,21 +6,21 @@ const TopBar = ({views, currentView, setView}) => {
 	  const onClick = () => {
 	    if(ownView.name === currentView.name)
 	      return
-	    setView(ownView)
+	    setView(ownView.create())
 	  }
-	  return <button onClick={onClick} > {ownView.name} </button>
+		return <button class="btn mx-2 btn-primary btn-dark"  onClick={onClick} > {ownView.name} </button>
 	}
       
 	const buttons = [
-	  <Button ownView={views.main} />,
-	  <Button ownView={views.form} />
+	  <Button key='1' ownView={views.main} />,
+	  <Button key='2' ownView={views.form} />
 	]
       
 	return (
-	  <div>
-	    <h2>Birdwatch</h2>
-	    {buttons}
-	  </div>
+	  <nav class="navbar navbar-dark bg-primary">
+	    <span class="navbar-brand mb-0 h1">Birdwatch</span>
+	    <div class="btn-toolbar">{buttons}</div>
+	  </nav>
 	)
 }
 
