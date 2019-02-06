@@ -4,17 +4,23 @@ import Form from './form'
 import TopBar from './topBar'
 
 const App = () => {
-  const [view, setView] = useState(<p>welcome!</p>)
+  const [view, setView] = useState((<div class="jumbotron">
+      <h1 class="display-4">Welcome!</h1>
+      <p class="lead">Birdwatch is an application for tracking bird observations made by you and other people.</p>
+      <hr class="my-4"/>
+      <p>Get started by clicking on 'All observations', and add your own by clicking 'Create observation'</p>
+    </div>)
+  )
   
   const views = {
     main: {
-      name: 'Main',
+      name: 'All observations',
       create: () => {
         return <Observations />
       }
     },
     form: {
-      name: 'Form',
+      name: 'Create observation',
       create: () => {
         return <Form redirect={() => {setView(views.main.create())}} />
       }

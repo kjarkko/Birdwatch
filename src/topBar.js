@@ -2,19 +2,17 @@ import React from 'react'
 
 const TopBar = ({views, currentView, setView}) => {
 
-	const Button = ({view}) => {
+	const Button = ({name, create}) => {
 	  const onClick = () => {
-	    if(view.name === currentView.name)
-	      return
-	    setView(view.create())
+	    if(name !== currentView.name)
+	      setView(create())
 	  }
-		return <button class="btn mx-2 btn-primary btn-dark"  onClick={onClick} > {view.name} </button>
+		return <button class="btn mx-2 btn-primary btn-dark"  onClick={onClick} > {name} </button>
 	}
 
-	const buttons = [
-	  <Button key='1' view={views.main} />,
-	  <Button key='2' view={views.form} />
-	]
+	const buttons = Object.values(views).map(v => 
+		<Button key={v.name} name={v.name} create={v.create} />
+	)
       
 	return (
 	  <nav class="navbar navbar-dark bg-primary">
