@@ -6,60 +6,33 @@ const config = require('./config.json')
 const loadLocal = (key) => 
   JSON.parse(localStorage.getItem(key)) || []
 const setLocal = (obj, key) => 
-  localStorage.setItem(key, JSON.stringify(loadLocal().concat(obj)))
+  localStorage.setItem(key, JSON.stringify(loadLocal(key).concat(obj)))
+const get = () => axios.get(config.URL)
+const post = (obs) => axios.post(config.URL, obs)
 
-const get = () => axios.get(config.urlGet)
-const post = (obs) => axios.post(config.urlPost, obs)
+let observations = loadLocal('observations').concat(loadLocal('todo'))
 
-
-/**
- * Save observation to server and localstorage
- * @param {*} obs - observation to be saved
- */
-export const save = (obs) => {
-  post(obs).then(() => {
-    setLocal(obs, 'observations')
-  }).catch(err => {
-    console.log(err)
-    setLocal(obs, 'todo') // not sent to server
-  })
-}
-
-const work = (obs, setf) => {
-  console.log('working')
+const work = () => {
   try { // fetch new ones
-    const res = get()
-    res.then(response => {
-      const serverObs = response.data
-      const newObs = removeUnion(serverObs, obs)// serverObs.filter(so => !obs.some(lo => equal(so,lo)))
-      console.log('\nserver: ', serverObs, '\nnew:', newObs, '\nold: ', obs)
-      setf(obs.concat(newObs), () => {this.props.updateItem(this.state)})
-      setLocal(newObs, 'observations')
+    get().then(response => {
+      const newObs = removeUnion(response.data, observations)
+      if(newObs.length > 0){
+        console.log('found new: ', newObs)
+        observations = observations.concat(newObs)
+        setLocal(newObs, 'observations')
+      }
     })
   }catch(err){
     console.log('failed to get', err)
   }
 
-  // send unsubmitted ones
-  const unsent = loadLocal('todo')
-  unsent.forEach(o => {
+  loadLocal('todo').forEach(o => { // send unsubmitted ones
     post(o).then(res => {
-      // remove from todo, add to observations
-    }).catch(err => {
-      // still can't send
-    })
+      setLocal(o, 'observations')
+      setLocal(loadLocal('todo').remove(o), 'todo')
+    }).catch(err => { /* still can't send */ })
   })
 }
-
-/**
- * 
- */
-export const getObservations = () => {
-  const sentData = loadLocal('observations') || []
-  const unsentData = loadLocal('todo') || []
-  const data = sentData.concat(unsentData)
-  return [data, get()]
-} 
 
 /**
  * Loads observations from localstorage and
@@ -69,11 +42,33 @@ export const getObservations = () => {
  * @param {*} obs - current observations
  * @param {*} setObs - set observations
  */
-export const ServerWorker = (obs, setObs) => {
-  console.log('worker: ', obs)
+const worker = () => {
+  work()
   setInterval(() => {
-    console.log('interval: ',obs)
-    work(obs, setObs)
+    work()
   }, 5000)
-
 }
+
+/**
+ * Save observation to server and localstorage
+ * @param {*} obs - observation to be saved
+ */
+const save = (obs) => {
+  observations.push(obs)
+  post(obs).then(() => {
+    setLocal(obs, 'observations')
+  }).catch(err => {
+    console.log(err)
+    setLocal(obs, 'todo') // not sent to server
+  })
+}
+
+const getObservations = () => observations
+
+const database = {
+  init: worker,
+  save: save,
+  load: getObservations 
+}
+
+export default database

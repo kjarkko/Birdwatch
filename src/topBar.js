@@ -1,19 +1,19 @@
-import React, {useState} from 'react'
+import React from 'react'
 
 const TopBar = ({views, currentView, setView}) => {
 
-	const Button = ({ownView}) => {
+	const Button = ({view}) => {
 	  const onClick = () => {
-	    if(ownView.name === currentView.name)
+	    if(view.name === currentView.name)
 	      return
-	    setView(ownView.create())
+	    setView(view.create())
 	  }
-		return <button class="btn mx-2 btn-primary btn-dark"  onClick={onClick} > {ownView.name} </button>
+		return <button class="btn mx-2 btn-primary btn-dark"  onClick={onClick} > {view.name} </button>
 	}
-      
+
 	const buttons = [
-	  <Button key='1' ownView={views.main} />,
-	  <Button key='2' ownView={views.form} />
+	  <Button key='1' view={views.main} />,
+	  <Button key='2' view={views.form} />
 	]
       
 	return (

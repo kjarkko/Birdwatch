@@ -4,7 +4,7 @@
       "id": 0,
       "species": "dodo",
       "rarity": "Extremely rare",
-      "date": "1.1.-66 000 000",
+      "date": 0,
       "location": "Underground",
       "notes": "dead"
     },
@@ -12,49 +12,17 @@
       "id": 1,
       "species": "T-Rex",
       "rarity": "Extremely rare",
-      "date": "some years ago",
+      "date": 0,
       "location": "Museum",
       "notes": "also dead"
     },
     {
-      "date": "Monday, February 4, 2019",
-      "location": "N/A",
+      "date": 0,
+      "location": "Ankkalinna",
       "species": "aku ankka",
-      "rarity": "Common",
+      "rarity": "Rare",
       "notes": "kvak",
       "id": 2
-    },
-    {
-      "date": "Monday, February 4, 2019",
-      "location": "N/A",
-      "species": "afsawewear",
-      "rarity": "Common",
-      "notes": "lwekajfiowagjoi",
-      "id": 3
-    },
-    {
-      "date": "Monday, February 4, 2019",
-      "location": "N/A",
-      "species": "xxx",
-      "rarity": "Rare",
-      "notes": "fae",
-      "id": 4
-    },
-    {
-      "date": "Tuesday, February 5, 2019",
-      "location": "N/A",
-      "species": "test",
-      "rarity": "Common",
-      "notes": "test test",
-      "id": 5
-    },
-    {
-      "date": "Tuesday, February 5, 2019",
-      "location": "N/A",
-      "species": "prii",
-      "rarity": "Rarity",
-      "notes": "pröö",
-      "id": 6
     }
   ]
 }

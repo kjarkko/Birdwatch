@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
-import {addObservation} from './database'
+import database from './database'
 import {geolocation, timestamp, rarityOpts} from './util'
 
-const Form = ({save}) => {
+const Form = ({redirect}) => {
   const [species, setSpecies] = useState('')
-  const [rarity, setRarity] = useState('Rarity')
+  const [rarity, setRarity] = useState(rarityOpts[0])
   const [notes, setNotes] = useState('')
 
   const submit = event => {
@@ -18,7 +18,8 @@ const Form = ({save}) => {
       rarity: rarity,
       notes: notes
     }
-    save(newObs)
+    database.save(newObs)
+    redirect()
   }
 
   // handlers for value changes
@@ -36,7 +37,7 @@ const Form = ({save}) => {
         </select>
         <textarea onChange={hnc} class='form-control m-2' placeholder='notes' id='notes'  />
         <button class='btn m-2 btn-success btn-block' type='submit'> submit  </button>
-        <button class='btn m-2 btn-danger btn-block'> discard </button>
+        <button class='btn m-2 btn-danger btn-block' onClick={redirect} > discard </button>
       </form>
     </div>
   )

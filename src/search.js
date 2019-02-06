@@ -1,33 +1,37 @@
 import React, {useState} from 'react'
+import {timeToString} from './util'
 
-const Search = ({observations, setResults}) => {
+const filter = (find) => (obs) => (
+  (timeToString(obs.date).includes(find)) || (obs.location.includes(find)) ||
+  (obs.species.includes(find)) || (obs.rarity.includes(find)) ||
+  (obs.notes.includes(find))
+)
 
-  const filter = (find) => (obs) => (
-    (obs.date.includes(find)) || (obs.location.includes(find)) ||
-    (obs.species.includes(find)) || (obs.rarity.includes(find)) ||
-    (obs.notes.includes(find))
-  )
+const compare = (crit, asc) => (a, b) => {
+  let cmp
+  if(crit !== 'date')
+    cmp = a[crit].localeCompare(b[crit])
+  else
+    cmp = a[crit] - b[crit]
+  return asc ? cmp : -cmp
+}
 
-  const compare = (crit, asc) => (a, b) => {
-    console.log(crit, asc, a[crit], b[crit])
-    return !asc ? (a[crit] < b[crit]) : (a[crit] > b[crit])
-  }
-   
+const createSortFn = (term, criteria, ascending) => ({
+  fn: (obs) => obs
+    .filter(filter(term))
+    .sort(compare(criteria, ascending))
+})
 
-  const update = (term,crit,asc) => {
-    const updated = observations
-      .filter(filter(term))
-      .sort(compare(crit, asc))
-    setResults(updated)
-  }
+export const initialSort = createSortFn('', 'date', true)
 
-  const possibleCriteria = ['species', 'rarity', 'date', 'location']
+export const Search = ({set}) => {
+
+  const update = (term,crit,asc) => {set(createSortFn(term,crit,asc))}
+
+  const possibleCriteria = ['date', 'species', 'rarity', 'location']
   const [criteria, setCriteria] = useState('date')
-  const [ascending, setAscending] = useState(false)
+  const [ascending, setAscending] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
-
-  
-
 
   // handlers for value changes
   const hcc = event => { // sort criteria
@@ -37,7 +41,7 @@ const Search = ({observations, setResults}) => {
     update(searchTerm, crit, ascending)
   }
   const hac = event =>{ // ascending or descending
-    const asc = event.target.value
+    const asc = !ascending
     console.log(asc)
     setAscending(asc)
     update(searchTerm, criteria, asc)
@@ -53,26 +57,22 @@ const Search = ({observations, setResults}) => {
     <div class='container'>
       <ul class='list-inline'>
 
-        <li class='list-inline-item'>
-          <label class='checkbox-inline'>
-            <input onChange={hac} type='checkbox' />Ascending
-          </label>
+        <li class='list-inline-item m-2'>
+          <button class='btn btn-secondary' style={{width: '110px',textAlign: 'center'}} onClick={hac}>{ascending?'Ascending':'Descending'}</button>
         </li>
 
-        <li class='list-inline-item'>
+        <li class='list-inline-item m-2'>
           <p></p>
-          <select onChange={hcc} class="custom-select m-2">
+          <select onChange={hcc} class="custom-select">
             {possibleCriteria.map(c => <option key={c}> {c} </option>)}
           </select>
         </li>
 
-        <li class='list-inline-item'>
-          <input onChange={hsc} value={searchTerm} class='form-control m-2' placeholder='Search...'/>
+        <li class='list-inline-item m-2'>
+          <input onChange={hsc} value={searchTerm} class='form-control' placeholder='Search...'/>
         </li>
 
       </ul>
     </div>
   )
 }
-
-export default Search

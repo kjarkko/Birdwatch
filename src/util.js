@@ -1,11 +1,13 @@
-export const timestamp = () => {
-	return new Date().toLocaleString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
-}
+export const timestamp = () => Date.now()
+
+export const timeToString = (time) => 
+  new Date(time)
+    .toLocaleString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })
 
 export const removeUnion = (source, other) => 
   source.filter(so => !other.some(lo => equal(so,lo)))
@@ -19,8 +21,8 @@ export const rarityOpts = [
   'Common', 'Rare', 'Extremely rare'
 ]
 
-export const geolocation = () => {
-  let location = 'N/A'
+let location = 'N/A'
+const updateLocation = () =>{
   const options = {
     enableHighAccuracy: true,
     timeout: 5000,
@@ -28,14 +30,16 @@ export const geolocation = () => {
   }
   const success = pos => {
     const crd = pos.coords
-    location = `lat: ${crd.latitude} long:${crd.longitude}`
+    location = `lat: ${crd.latitude.toString().slice(0,6)}, long: ${crd.longitude.toString().slice(0,6)}`
   }
   const error = err => {
-    console.log(err)
+    console.log('failed to get location',err)
   }
   navigator
     .geolocation
     .getCurrentPosition(success, error, options)
-
-  return location
 }
+updateLocation()
+setInterval(updateLocation,5000)
+
+export const geolocation = () => (location)
