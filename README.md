@@ -7,11 +7,12 @@ Application for tracking bird observations
 
 ### Setup
 
-run `npm install` to install dependencies. You will also want to install `json-server` as the seperate data server, change the URL in `/src/config.json` to the desired one.
+run `npm install` to install the required dependencies. You will also need `json-server` as the seperate data server.
 
 ### Starting the application
 
-Run `npm start` and start `json-server` with the corresponding port (for example `--port=3001`) and `--watch db.json`
+Run `npm start` and start `json-server` with the corresponding port (for example `--port=3001`) and `--watch db.json`.
+Change the URL in `/src/config.json` to the desired one, the default is `localhost:3001`.
 
 
 ## Miscellaneous
